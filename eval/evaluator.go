@@ -19,10 +19,10 @@ func Eval(expr node, en *env) node {
 		val = e
 	case symbol:
 		val = en.Vars[e]
-		if val == nil {
-			fmt.Println(e)
-		}
 	case []node:
+		if len(e) == 0 {
+			return "ok"
+		}
 		switch ex, _ := e[0].(symbol); ex {
 		case "define":
 			en.Vars[e[1].(symbol)] = Eval(e[2], en)
