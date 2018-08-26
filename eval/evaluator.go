@@ -26,7 +26,6 @@ func Eval(expr node, en *env) node {
 		}
 		switch ex, _ := e[0].(symbol); ex {
 		case "defn":
-			//TODO: Function definition here somehow?
 			en.Vars[e[1].(symbol)] = Eval(e[2], en)
 			val = "ok"
 		default:
@@ -49,7 +48,6 @@ func apply(function node, args []node) node {
 	switch f := function.(type) {
 	case func(...node) node:
 		value = f(args...)
-	//TODO: define function definition
 	default:
 		fmt.Println("Undefined function call")
 	}

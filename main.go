@@ -1,14 +1,9 @@
 package main
 
 import (
-	"alisp/environment"
-	"alisp/eval"
-	"alisp/lexer"
-	"alisp/parser"
 	"alisp/repl"
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"os"
 )
 
@@ -20,23 +15,25 @@ func main() {
 			fmt.Println("Show help")
 		case "repl":
 			reader := bufio.NewReader(os.Stdin)
-			repl.Repl(reader)
-		default:
-			//Read program from file
-			text, _ := ioutil.ReadFile(arg)
-			e := environment.New()
-			tokens := lexer.Tokenize(string(text))
-			parsed, err := parser.Parse(tokens)
-			if err != nil {
-				fmt.Println(err)
-			} else {
-				for _, expr := range parsed {
-					res := eval.Eval(expr, e)
-					if res != "ok" {
-						fmt.Println(eval.Eval(expr, e))
+			repl.Start(reader)
+			/*
+				default:
+					//Read program from file
+					text, _ := ioutil.ReadFile(arg)
+					e := environment.New()
+					tokens := lexer.Tokenize(string(text))
+					parsed, err := parser.Parse(tokens)
+					if err != nil {
+						fmt.Println(err)
+					} else {
+						for _, expr := range parsed {
+							res := eval.Eval(expr, e)
+							if res != "ok" {
+								fmt.Println(eval.Eval(expr, e))
+							}
+						}
 					}
-				}
-			}
+			*/
 		}
 	} else {
 		fmt.Println("Print usage")
