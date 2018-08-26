@@ -5,3 +5,9 @@ type Node interface{}
 
 type Symbol string
 type Number float64
+
+type Func struct {
+	Params Node
+	Body   Node
+	En     *Environment
+}

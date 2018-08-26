@@ -9,6 +9,7 @@ type node = environment.Node
 type env = environment.Environment
 type number = environment.Number
 type symbol = environment.Symbol
+type fun = environment.Func
 
 //Eval : checks type of expression and evaluates it
 func Eval(expr node, en *env) node {
@@ -24,7 +25,8 @@ func Eval(expr node, en *env) node {
 			return "ok"
 		}
 		switch ex, _ := e[0].(symbol); ex {
-		case "define":
+		case "defn":
+			//TODO: Function definition here somehow?
 			en.Vars[e[1].(symbol)] = Eval(e[2], en)
 			val = "ok"
 		default:
@@ -47,6 +49,7 @@ func apply(function node, args []node) node {
 	switch f := function.(type) {
 	case func(...node) node:
 		value = f(args...)
+	//TODO: define function definition
 	default:
 		fmt.Println("Undefined function call")
 	}
