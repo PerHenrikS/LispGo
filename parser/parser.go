@@ -30,16 +30,16 @@ func New(l *lexer.Lexer) *Parser {
 }
 
 //Parse : parses program and returns list of expressions
-func (p *Parser) Parse() []Node {
+func (p *Parser) Parse() ([]Node, error) {
 	expressions := make([]Node, 0)
 	for p.curToken.Type != lexer.EOF {
 		expression, err := p.read()
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		expressions = append(expressions, expression)
 	}
-	return expressions
+	return expressions, nil
 }
 
 //advances parsers tokens by 1
@@ -50,10 +50,9 @@ func (p *Parser) nextToken() {
 
 func (p *Parser) read() (Node, error) {
 	if p.curToken.Type == lexer.EOF {
-		return nil, errors.New("End of file")
+		return nil, errors.New("Parse error - Unexpected EOF")
 	}
 
-	//ADVANCE
 	token := p.curToken
 	p.nextToken()
 
@@ -71,7 +70,7 @@ func (p *Parser) read() (Node, error) {
 		p.nextToken()
 		return L, nil
 	case lexer.RPAREN:
-		return nil, errors.New("Unexpected )")
+		return nil, errors.New("Parse error - unexpected ')'")
 	default:
 		if f, err := strconv.ParseFloat(token.Literal, 64); err == nil {
 			return number(f), nil

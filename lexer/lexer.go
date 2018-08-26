@@ -13,12 +13,12 @@ type Token struct {
 	Literal string
 }
 
-//TODO: Extend token set
 const (
 	ILLEGAL = "ILLEGAL"
 	EOF     = "EOF"
 	DEFINE  = "DEFINE"
 	IDENT   = "IDENTIFIER"
+	CONS    = "CONS"
 	NUMBER  = "NUMBER"
 	PLUS    = "+"
 	MINUS   = "-"
@@ -39,8 +39,10 @@ type Lexer struct {
 
 var keywords = map[string]TokenType{
 	"defn": DEFINE,
+	"cons": CONS,
 }
 
+//LookupIdentifier : returns token associated with input identifier
 func LookupIdentifier(ident string) TokenType {
 	if tok, ok := keywords[ident]; ok {
 		return tok

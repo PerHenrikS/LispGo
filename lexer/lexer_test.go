@@ -3,7 +3,7 @@ package lexer
 import "testing"
 
 func TestNextToken(t *testing.T) {
-	input := `+-*/()'()(defn x 255)`
+	input := `+-*/()'()(defn x 255 cons)`
 
 	tests := []struct {
 		expectedType    TokenType
@@ -22,6 +22,7 @@ func TestNextToken(t *testing.T) {
 		{DEFINE, "defn"},
 		{IDENT, "x"},
 		{NUMBER, "255"},
+		{CONS, "cons"},
 		{RPAREN, ")"},
 	}
 

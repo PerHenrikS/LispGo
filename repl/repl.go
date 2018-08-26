@@ -17,7 +17,10 @@ func read(reader *bufio.Reader, en *env) {
 	text, _ := reader.ReadString('\n')
 	l := lexer.New(text)
 	p := parser.New(l)
-	exprs := p.Parse()
+	exprs, err := p.Parse()
+	if err != nil {
+		fmt.Println(err)
+	}
 	for _, expr := range exprs {
 		fmt.Println(eval.Eval(expr, en))
 	}
