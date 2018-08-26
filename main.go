@@ -16,24 +16,7 @@ func main() {
 		case "repl":
 			reader := bufio.NewReader(os.Stdin)
 			repl.Start(reader)
-			/*
-				default:
-					//Read program from file
-					text, _ := ioutil.ReadFile(arg)
-					e := environment.New()
-					tokens := lexer.Tokenize(string(text))
-					parsed, err := parser.Parse(tokens)
-					if err != nil {
-						fmt.Println(err)
-					} else {
-						for _, expr := range parsed {
-							res := eval.Eval(expr, e)
-							if res != "ok" {
-								fmt.Println(eval.Eval(expr, e))
-							}
-						}
-					}
-			*/
+			//TODO: default: read from file and evaluate !!
 		}
 	} else {
 		fmt.Println("Print usage")
