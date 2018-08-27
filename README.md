@@ -14,6 +14,9 @@ For example I don't like the lisp naming conventions of car (Contents of the Add
 , cdr (Contents of the Decrement part of Register number). So I call them "head" and "tail", known from Elixir and Haskell, 
 which describes the operations more intuitively. 
 
-### Todo: 
+### Todo:
+- [ ] implement comments.
+- [ ] implement strings. 
+- [ ] a net/http library based on golangs net/http. 
 - [ ] better error handling and reporting for easier debugging.
 - [ ] standard library. 
