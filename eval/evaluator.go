@@ -26,6 +26,8 @@ func Eval(expr node, en *env) node {
 			return "ok"
 		}
 		switch ex, _ := e[0].(symbol); ex {
+		case "print":
+			fmt.Println(Eval(e[1], en))
 		case "defn":
 			/*
 				val = fun{Params: params, Body: e[i+1], En: en}
@@ -58,7 +60,7 @@ func Eval(expr node, en *env) node {
 			val = apply(Eval(e[0], en), values) //Applies function to values (operands)
 		}
 	default:
-		fmt.Println("Unknown expression type - ERROR")
+		fmt.Println("EVAL ERROR - unknown expression type", e)
 	}
 	return val
 }
