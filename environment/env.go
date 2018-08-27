@@ -1,11 +1,23 @@
 package environment
 
+//Environment : TODO: comment explain why we need a parent environment (was confusing to me atleast)
 type Environment struct {
-	Vars map[Symbol]Node
+	Vars   map[Symbol]Node
+	Parent *Environment
 }
 
+//New : Environment constructor
 func New() *Environment {
-	return &Environment{Vars: initializeFuncs()}
+	return &Environment{Vars: initializeFuncs(), Parent: nil}
+}
+
+//Find : returns correct environment in context. ie. global or function scope variables?
+func (e *Environment) Find(s Symbol) *Environment {
+	if _, ok := e.Vars[s]; ok {
+		return e
+	} else {
+		return e.Parent.Find(s)
+	}
 }
 
 //TODO: add error to these for runtime error reporting instead of panics
@@ -38,6 +50,21 @@ func initializeFuncs() map[Symbol]Node {
 				res *= i.(Number)
 			}
 			return res
+		},
+		"<": func(a ...Node) Node {
+			return a[0].(Number) < a[1].(Number)
+		},
+		"<=": func(a ...Node) Node {
+			return a[0].(Number) <= a[1].(Number)
+		},
+		">": func(a ...Node) Node {
+			return a[0].(Number) > a[1].(Number)
+		},
+		">=": func(a ...Node) Node {
+			return a[0].(Number) >= a[1].(Number)
+		},
+		"=": func(a ...Node) Node {
+			return a[0] == a[1]
 		},
 		"cons": func(a ...Node) Node {
 			//Calling them head and tail because it makes sense to me from elixir and LYAH

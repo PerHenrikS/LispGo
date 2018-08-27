@@ -14,19 +14,26 @@ type Token struct {
 }
 
 const (
-	ILLEGAL = "ILLEGAL"
-	EOF     = "EOF"
-	DEFINE  = "DEFINE"
-	IDENT   = "IDENTIFIER"
-	CONS    = "CONS"
-	NUMBER  = "NUMBER"
-	PLUS    = "+"
-	MINUS   = "-"
-	DIV     = "/"
-	MUL     = "*"
-	LPAREN  = "("
-	RPAREN  = ")"
-	QUOTE   = "'"
+	ILLEGAL  = "ILLEGAL"
+	EOF      = "EOF"
+	DEFINE   = "DEFINE"
+	IDENT    = "IDENTIFIER"
+	CONS     = "CONS"
+	NUMBER   = "NUMBER"
+	PLUS     = "+"
+	MINUS    = "-"
+	DIV      = "/"
+	MUL      = "*"
+	LPAREN   = "("
+	RPAREN   = ")"
+	LSQBRACK = "["
+	RSQBRACK = "]"
+	QUOTE    = "'"
+	GTHEN    = ">"
+	GEQUAL   = ">="
+	LTHEN    = "<"
+	LEQUAL   = "<="
+	EQUAL    = "="
 )
 
 //Lexer : holds information needed for tokenizing
@@ -97,6 +104,22 @@ func (l *Lexer) NextToken() Token {
 		tok = newToken(RPAREN, l.ch)
 	case '\'':
 		tok = newToken(QUOTE, l.ch)
+	case '<':
+		if l.peekChar() == '=' {
+			tok.Literal = "<="
+			tok.Type = LEQUAL
+		} else {
+			tok = newToken(LTHEN, l.ch)
+		}
+	case '>':
+		if l.peekChar() == '=' {
+			tok.Literal = ">="
+			tok.Type = GEQUAL
+		} else {
+			tok = newToken(GTHEN, l.ch)
+		}
+	case '=':
+		tok = newToken(EQUAL, l.ch)
 	case 0: //EOF as defined in readChar()
 		tok.Literal = ""
 		tok.Type = EOF
