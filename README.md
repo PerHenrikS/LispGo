@@ -19,5 +19,6 @@ which describes the operations more intuitively.
 - [ ] implement strings. 
 - [ ] a net/http library based on golangs net/http. 
 - [ ] better error handling and reporting for easier debugging.
+- [ ] cleanup repl print. 
 - [ ] standard library. 
 - [ ] testing. 
