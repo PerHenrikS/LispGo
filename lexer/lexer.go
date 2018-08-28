@@ -42,20 +42,6 @@ type Lexer struct {
 	ch       byte   //current character
 }
 
-var keywords = map[string]TokenType{
-	"defn":  DEFINE,
-	"cons":  CONS,
-	"defun": DEFUN,
-}
-
-//LookupIdentifier : returns token associated with input identifier
-func LookupIdentifier(ident string) TokenType {
-	if tok, ok := keywords[ident]; ok {
-		return tok
-	}
-	return IDENT
-}
-
 //New : given input program returns lexer
 func New(input string) *Lexer {
 	l := &Lexer{input: input}
@@ -126,7 +112,7 @@ func (l *Lexer) NextToken() Token {
 	default:
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
-			tok.Type = LookupIdentifier(tok.Literal)
+			tok.Type = IDENT
 			return tok //return instantly because readChar has been executed in readIdentifier()
 		} else if isDigit(l.ch) {
 			tok.Type = NUMBER

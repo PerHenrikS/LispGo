@@ -22,12 +22,12 @@ func TestValidProg(t *testing.T) {
 
 	tests := []tokenTest{
 		{LPAREN, "("},
-		{DEFINE, "defn"},
+		{IDENT, "defn"},
 		{IDENT, "x"},
 		{NUMBER, "5"},
 		{RPAREN, ")"},
 		{LPAREN, "("},
-		{DEFUN, "defun"},
+		{IDENT, "defun"},
 		{IDENT, "hello"},
 		{LPAREN, "("},
 		{IDENT, "x"},
@@ -72,10 +72,10 @@ func TestNextToken(t *testing.T) {
 		{LPAREN, "("},
 		{RPAREN, ")"},
 		{LPAREN, "("},
-		{DEFINE, "defn"},
+		{IDENT, "defn"},
 		{IDENT, "x"},
 		{NUMBER, "255"},
-		{CONS, "cons"},
+		{IDENT, "cons"},
 		{RPAREN, ")"},
 	}
 
