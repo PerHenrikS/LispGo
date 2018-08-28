@@ -37,10 +37,12 @@ func Eval(expr node, en *env) node {
 		case "defun":
 			//defun is followed by a symbol, it is therefore associated with a name
 			if _, ok := e[1].(symbol); ok {
-				//needs to evaluate to fun{p, b, e} at the end.
-				//so the symbol needs to be added to the environment with a
-				//new call to Eval() with "(defn (e[2]) [3])"
-				//Super hacky
+				/*
+					needs to evaluate to fun{p, b, e} at the end.
+					so the symbol needs to be added to the environment with a
+					new call to Eval() with "(defn (e[2]) [3])"
+					Super hacky
+				*/
 				val = Eval(namedFuncSugar(e), en)
 			} else {
 				val = fun{Params: e[1], Body: e[2], En: en}
