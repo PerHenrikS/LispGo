@@ -7,5 +7,13 @@
 
 (print (tail (list 1 2 3 4)))   ;prints [2 3 4]
 
-;Had some small problems with two comments after each other and at EOF 
-;Not crashing !
+;had some small problems with two comments after each other and at EOF 
+;not crashing !
+
+;some recursive action with a factorial function 
+(defun fact (n) 
+  (if (<= n 0) 
+    1
+    (* n (fact (- n 1)))))
+
+(print (fact 5))                ;prints 120

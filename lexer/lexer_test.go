@@ -59,7 +59,7 @@ func TestValidProg(t *testing.T) {
 }
 
 func TestNextToken(t *testing.T) {
-	input := `+-*/()'()(defn x 255 cons)`
+	input := `+-*/()()(defn x 255 cons)<=`
 
 	tests := []tokenTest{
 		{PLUS, "+"},
@@ -68,7 +68,6 @@ func TestNextToken(t *testing.T) {
 		{DIV, "/"},
 		{LPAREN, "("},
 		{RPAREN, ")"},
-		{QUOTE, "'"},
 		{LPAREN, "("},
 		{RPAREN, ")"},
 		{LPAREN, "("},
@@ -77,6 +76,8 @@ func TestNextToken(t *testing.T) {
 		{NUMBER, "255"},
 		{IDENT, "cons"},
 		{RPAREN, ")"},
+		{LEQUAL, "<="},
+		{EOF, ""},
 	}
 
 	l := New(input)

@@ -88,6 +88,7 @@ func (l *Lexer) NextToken() Token {
 		if l.peekChar() == '=' {
 			tok.Literal = "<="
 			tok.Type = LEQUAL
+			l.readChar() //Otherwise it will get an extra =
 		} else {
 			tok = newToken(LTHEN, l.ch)
 		}
@@ -95,6 +96,7 @@ func (l *Lexer) NextToken() Token {
 		if l.peekChar() == '=' {
 			tok.Literal = ">="
 			tok.Type = GEQUAL
+			l.readChar() //Otherwise it will get an extra =
 		} else {
 			tok = newToken(GTHEN, l.ch)
 		}
