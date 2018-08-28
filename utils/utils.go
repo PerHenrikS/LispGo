@@ -6,7 +6,7 @@ import (
 )
 
 /*
-DevDebug : used for debugging as developing
+DevDebug : used for debugging when developing
 as it is really difficult to keep track where the
 recursion goes and what values a function is
 called with.
