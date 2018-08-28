@@ -22,7 +22,6 @@ const (
 	RPAREN    = ")"
 	LSQBRACK  = "["
 	RSQBRACK  = "]"
-	QUOTE     = "'"
 	GTHEN     = ">"
 	GEQUAL    = ">="
 	LTHEN     = "<"
@@ -85,8 +84,6 @@ func (l *Lexer) NextToken() Token {
 		tok = newToken(LPAREN, l.ch)
 	case ')':
 		tok = newToken(RPAREN, l.ch)
-	case '\'':
-		tok = newToken(QUOTE, l.ch)
 	case '<':
 		if l.peekChar() == '=' {
 			tok.Literal = "<="
