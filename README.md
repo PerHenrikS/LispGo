@@ -5,7 +5,7 @@
 
 The purpose of this project is to better understand how languages work. I have been playing around with programming language
 implementation and wanted a somewhat easy language to implement. The ultimate goal for this project is to have a language 
-complete enough that it is possible to implement a simple http server and host my own site on it.
+complete enough to do the assignments in SICP (so original). 
 
 ### Design choices
 
@@ -15,6 +15,9 @@ For example I don't like the lisp naming conventions of car (Contents of the Add
 which describes the operations more intuitively. 
 
 I'm still not convinced that the choice of making the token structure was worth it. To use an input - split - replace approach to tokenize might acutally be more readabe in the case of lisp. 
+
+The test.clj is a real working program written in the language. It has the clojure extension for syntax highlighting in 
+my text editor.
 
 
 ### Todo:
