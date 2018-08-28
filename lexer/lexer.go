@@ -12,10 +12,7 @@ type Token struct {
 const (
 	ILLEGAL   = "ILLEGAL"
 	EOF       = "EOF"
-	DEFINE    = "DEFINE"
-	DEFUN     = "DEFUN"
 	IDENT     = "IDENTIFIER"
-	CONS      = "CONS"
 	NUMBER    = "NUMBER"
 	PLUS      = "+"
 	MINUS     = "-"
