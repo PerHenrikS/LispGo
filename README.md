@@ -15,8 +15,9 @@ For example I don't like the lisp naming conventions of car (Contents of the Add
 which describes the operations more intuitively. 
 
 ### Todo:
-- [ ] implement comments.
+- [x] implement comments.
 - [ ] implement strings. 
 - [ ] a net/http library based on golangs net/http. 
 - [ ] better error handling and reporting for easier debugging.
 - [ ] standard library. 
+- [ ] testing. 
