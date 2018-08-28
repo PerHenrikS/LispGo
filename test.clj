@@ -1,11 +1,8 @@
+;This is a comment 
 (defn somenumber 29)
 
-(defun incr 
-  (x) 
-    (+ x 1))
+(defun incr (x) (+ x 1))
 
-(print 
-  (incr somenumber))
+(print (incr somenumber))
 
-(print 
-  (tail (list 1 2 3 4)))
+(print (tail (list 1 2 3 4)))

@@ -82,7 +82,6 @@ func apply(function node, args []node) node {
 			//Add parameter value to function scope environment
 			en.Vars[params.(symbol)] = args
 		}
-		fmt.Println("Going in to eval with ", f.Body)
 		value = Eval(f.Body, en)
 	default:
 		fmt.Println("EVAL ERROR (apply) - Undefined function call ", f)

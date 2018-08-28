@@ -10,26 +10,28 @@ type Token struct {
 }
 
 const (
-	ILLEGAL  = "ILLEGAL"
-	EOF      = "EOF"
-	DEFINE   = "DEFINE"
-	IDENT    = "IDENTIFIER"
-	CONS     = "CONS"
-	NUMBER   = "NUMBER"
-	PLUS     = "+"
-	MINUS    = "-"
-	DIV      = "/"
-	MUL      = "*"
-	LPAREN   = "("
-	RPAREN   = ")"
-	LSQBRACK = "["
-	RSQBRACK = "]"
-	QUOTE    = "'"
-	GTHEN    = ">"
-	GEQUAL   = ">="
-	LTHEN    = "<"
-	LEQUAL   = "<="
-	EQUAL    = "="
+	ILLEGAL   = "ILLEGAL"
+	EOF       = "EOF"
+	DEFINE    = "DEFINE"
+	DEFUN     = "DEFUN"
+	IDENT     = "IDENTIFIER"
+	CONS      = "CONS"
+	NUMBER    = "NUMBER"
+	PLUS      = "+"
+	MINUS     = "-"
+	DIV       = "/"
+	MUL       = "*"
+	LPAREN    = "("
+	RPAREN    = ")"
+	LSQBRACK  = "["
+	RSQBRACK  = "]"
+	QUOTE     = "'"
+	GTHEN     = ">"
+	GEQUAL    = ">="
+	LTHEN     = "<"
+	LEQUAL    = "<="
+	EQUAL     = "="
+	SLCOMMENT = ";"
 )
 
 //Lexer : holds information needed for tokenizing
@@ -41,8 +43,9 @@ type Lexer struct {
 }
 
 var keywords = map[string]TokenType{
-	"defn": DEFINE,
-	"cons": CONS,
+	"defn":  DEFINE,
+	"cons":  CONS,
+	"defun": DEFUN,
 }
 
 //LookupIdentifier : returns token associated with input identifier
@@ -83,7 +86,8 @@ func (l *Lexer) peekChar() byte {
 func (l *Lexer) NextToken() Token {
 	var tok Token
 
-	l.skipWhitespace()
+	//Skips comments and whitespace
+	l.skip()
 
 	switch l.ch {
 	case '+':
@@ -154,9 +158,24 @@ func (l *Lexer) readIdentifier() string {
 	return l.input[pos:l.position]
 }
 
+func (l *Lexer) skip() {
+	l.skipWhitespace()
+	l.skipSingleLineComment()
+}
+
 func (l *Lexer) skipWhitespace() {
 	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
 		l.readChar()
+	}
+}
+
+//Skips all after ; and then whitespace
+func (l *Lexer) skipSingleLineComment() {
+	if l.ch == ';' {
+		for l.ch != '\n' {
+			l.readChar()
+		}
+		l.skipWhitespace()
 	}
 }
 
@@ -171,4 +190,8 @@ func isLetter(ch byte) bool {
 
 func isDigit(ch byte) bool {
 	return '0' <= ch && ch <= '9'
+}
+
+func isNextLine(ch byte) bool {
+	return ch == '\n'
 }
