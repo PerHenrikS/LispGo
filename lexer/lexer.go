@@ -172,10 +172,13 @@ func (l *Lexer) skipWhitespace() {
 //Skips all after ; and then whitespace
 func (l *Lexer) skipSingleLineComment() {
 	if l.ch == ';' {
-		for l.ch != '\n' {
+		for l.ch != '\n' && l.ch != 0 {
 			l.readChar()
 		}
 		l.skipWhitespace()
+		if l.ch == ';' {
+			l.skip()
+		}
 	}
 }
 

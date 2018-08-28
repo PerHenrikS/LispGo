@@ -16,7 +16,8 @@ func TestValidProg(t *testing.T) {
 	;-.-
 	(defun hello (x) (x + 1)) ;Another comment 
 	(hello x) 
-	;COMMENTS EVERYWHERE 
+	;COMMENTS EVERYWHERE
+	;What
 	`
 
 	tests := []tokenTest{
@@ -41,6 +42,7 @@ func TestValidProg(t *testing.T) {
 		{IDENT, "hello"},
 		{IDENT, "x"},
 		{RPAREN, ")"},
+		{EOF, ""},
 	}
 
 	l := New(program)
