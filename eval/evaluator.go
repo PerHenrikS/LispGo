@@ -122,6 +122,9 @@ func apply(function node, args []node) node {
 }
 
 func namedFuncSugar(e []node) []node {
+	if len(e) < 4 {
+		fmt.Printf("Parse error - function %s", e)
+	}
 	return []node{
 		symbol("defn"),
 		e[1],
