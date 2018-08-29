@@ -4,8 +4,7 @@
 ### Goal 
 
 The purpose of this project is to better understand how languages work. I have been playing around with programming language
-implementation and wanted a somewhat easy language to implement. The ultimate goal for this project is to have a language 
-complete enough to do the assignments in SICP (so original). 
+implementation and wanted a somewhat easy language to implement.  
 
 ### Design choices
 
@@ -22,9 +21,10 @@ my text editor.
 
 ### Todo:
 - [x] implement comments.
-- [ ] implement strings.  
+- [ ] implement strings (just a convenience when printing IMO).  
 - [ ] better error handling and reporting for easier debugging.
 - [ ] cleanup repl print. 
 - [ ] macros.
 - [ ] standard library. 
 - [ ] testing for stability. 
+- [ ] do blocks.
