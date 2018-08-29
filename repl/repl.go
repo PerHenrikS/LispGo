@@ -22,7 +22,14 @@ func read(reader *bufio.Reader, en *env) {
 		fmt.Println(err)
 	}
 	for _, expr := range exprs {
-		fmt.Println(eval.Eval(expr, en))
+		evaluated := eval.Eval(expr, en)
+		if len(en.Errors) > 0 {
+			for _, err := range en.Errors {
+				fmt.Println(err)
+			}
+			break
+		}
+		fmt.Println(evaluated)
 	}
 }
 

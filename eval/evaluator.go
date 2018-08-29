@@ -19,6 +19,9 @@ var debug = false
 //Eval : checks type of expression and evaluates it
 func Eval(expr node, en *env) node {
 	var val node
+	if len(en.Errors) > 0 {
+		return nil
+	}
 	//Type switch to determine type of passed expression
 	switch e := expr.(type) {
 	case number:
@@ -84,6 +87,10 @@ func Eval(expr node, en *env) node {
 			if debug {
 				utils.DevDebug("EVAL - FUNCTION APPLICATION", e)
 			}
+			if len(e) < 2 {
+				en.Errors = append(en.Errors, "evaluating function with too little args")
+				return nil
+			}
 			arguments := e[1:] //Operands of the function
 			values := make([]node, len(arguments))
 			for i, val := range arguments {
@@ -123,7 +130,7 @@ func apply(function node, args []node) node {
 
 func namedFuncSugar(e []node) []node {
 	if len(e) < 4 {
-		fmt.Printf("Parse error - function %s", e)
+		return nil
 	}
 	return []node{
 		symbol("defn"),

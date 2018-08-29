@@ -16,3 +16,13 @@ Current expression - Where it is called
 func DevDebug(where string, expression environment.Node) {
 	fmt.Println(expression, " at ", where)
 }
+
+/*
+BuildError : build a sensible error string to
+output for the user
+*/
+func BuildError(errtype string) string {
+	//TODO: implement some smart error reporting system to tell where it happened
+	s := "EVAL ERROR - Invalid " + errtype
+	return s
+}

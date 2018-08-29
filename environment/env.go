@@ -2,6 +2,7 @@ package environment
 
 //Environment : TODO: comment explain why we need a parent environment (was confusing to me atleast)
 type Environment struct {
+	Errors []string
 	Vars   map[Symbol]Node
 	Parent *Environment
 }
