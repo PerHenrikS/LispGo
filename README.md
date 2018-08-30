@@ -1,10 +1,10 @@
 ## LispGo - A lisp implementation in golang
-#### A semi-generic lisp implementation in golang.
+#### Work in progress
 
 ### Goal 
 
 The purpose of this project is to better understand how languages work. I have been playing around with programming language
-implementation and wanted a somewhat easy language to implement.  
+implementation and wanted a somewhat easy language to implement.   
 
 ### Design choices
 
