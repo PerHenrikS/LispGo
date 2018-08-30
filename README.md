@@ -21,7 +21,7 @@ my text editor.
 
 ### Todo:
 - [x] implement comments.
-- [ ] implement strings (just a convenience when printing IMO).  
+- [ ] implement strings.  
 - [ ] better error handling and reporting for easier debugging.
 - [ ] cleanup repl print. 
 - [ ] macros.
