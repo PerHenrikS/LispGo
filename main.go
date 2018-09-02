@@ -6,6 +6,7 @@ import (
 	"alisp/lexer"
 	"alisp/parser"
 	"alisp/repl"
+	"alisp/utils"
 	"bufio"
 	"fmt"
 	"io/ioutil"
@@ -31,6 +32,7 @@ func main() {
 			if err != nil {
 				fmt.Println(err)
 			}
+			d := utils.NewDebugger()
 			en := environment.New()
 			l := lexer.New(string(text))
 			p := parser.New(l)
@@ -39,7 +41,7 @@ func main() {
 				fmt.Println("Parse error", err)
 			}
 			for _, expr := range exprs {
-				eval.Eval(expr, en)
+				eval.Eval(expr, en, d)
 			}
 		}
 	} else {

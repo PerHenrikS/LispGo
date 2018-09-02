@@ -13,11 +13,8 @@ type symbol = environment.Symbol
 type fun = environment.Func
 type vars = map[symbol]node
 
-//TODO: set this to some dev config file? package.json type thing
-var debug = false
-
 //Eval : checks type of expression and evaluates it
-func Eval(expr node, en *env) node {
+func Eval(expr node, en *env, d *utils.Debugger) node {
 	var val node
 	if len(en.Errors) > 0 {
 		return nil
@@ -25,19 +22,13 @@ func Eval(expr node, en *env) node {
 	//Type switch to determine type of passed expression
 	switch e := expr.(type) {
 	case number:
-		if debug {
-			utils.DevDebug("EVAL - NUMBER", e)
-		}
+		d.DevDebug("EVAL - NUMBER", e)
 		val = e
 	case symbol:
-		if debug {
-			utils.DevDebug("EVAL - SYMBOL", e)
-		}
+		d.DevDebug("EVAL - SYMBOL", e)
 		val = en.Find(e).Vars[e]
 	case []node:
-		if debug {
-			utils.DevDebug("EVAL - LIST OF NODES", e)
-		}
+		d.DevDebug("EVAL - LIST OF NODES", e)
 		if len(e) == 0 {
 			return "ok"
 		}
@@ -45,23 +36,17 @@ func Eval(expr node, en *env) node {
 		case "quote":
 			val = e[1]
 		case "print":
-			if debug {
-				utils.DevDebug("EVAL - PRINT", e)
-			}
-			fmt.Println(Eval(e[1], en))
+			d.DevDebug("EVAL - PRINT", e)
+			fmt.Println(Eval(e[1], en, d))
 		case "defn":
-			if debug {
-				utils.DevDebug("EVAL - DEFN", e)
-			}
+			d.DevDebug("EVAL - DEFN", e)
 			/*
 				val = fun{Params: params, Body: e[i+1], En: en}
 			*/
-			en.Vars[e[1].(symbol)] = Eval(e[2], en)
+			en.Vars[e[1].(symbol)] = Eval(e[2], en, d)
 			val = "ok"
 		case "defun":
-			if debug {
-				utils.DevDebug("EVAL - DEFUN", e)
-			}
+			d.DevDebug("EVAL - DEFUN", e)
 			//defun is followed by a symbol, it is therefore associated with a name
 			if _, ok := e[1].(symbol); ok {
 				/*
@@ -70,23 +55,19 @@ func Eval(expr node, en *env) node {
 					new call to Eval() with "(defn (e[2]) [3])"
 					Super hacky
 				*/
-				val = Eval(namedFuncSugar(e), en)
+				val = Eval(namedFuncSugar(e), en, d)
 			} else {
 				val = fun{Params: e[1], Body: e[2], En: en}
 			}
 		case "if":
-			if debug {
-				utils.DevDebug("EVAL - IF", e)
-			}
-			if Eval(e[1], en).(bool) {
-				val = Eval(e[2], en)
+			d.DevDebug("EVAL - IF", e)
+			if Eval(e[1], en, d).(bool) {
+				val = Eval(e[2], en, d)
 			} else {
-				val = Eval(e[3], en)
+				val = Eval(e[3], en, d)
 			}
 		default:
-			if debug {
-				utils.DevDebug("EVAL - FUNCTION APPLICATION", e)
-			}
+			d.DevDebug("EVAL - FUNCTION APPLICATION", e)
 			if len(e) < 2 {
 				en.Errors = append(en.Errors, "evaluating function with too little args")
 				return nil
@@ -94,9 +75,9 @@ func Eval(expr node, en *env) node {
 			arguments := e[1:] //Operands of the function
 			values := make([]node, len(arguments))
 			for i, val := range arguments {
-				values[i] = Eval(val, en)
+				values[i] = Eval(val, en, d)
 			}
-			val = apply(Eval(e[0], en), values) //Applies function to values (operands)
+			val = apply(Eval(e[0], en, d), values, d) //Applies function to values (operands)
 		}
 	default:
 		fmt.Println("EVAL ERROR - unknown expression type", e)
@@ -104,7 +85,7 @@ func Eval(expr node, en *env) node {
 	return val
 }
 
-func apply(function node, args []node) node {
+func apply(function node, args []node, d *utils.Debugger) node {
 	var value node
 	switch f := function.(type) {
 	case func(...node) node:
@@ -121,7 +102,7 @@ func apply(function node, args []node) node {
 			//Add parameter value to function scope environment
 			en.Vars[params.(symbol)] = args
 		}
-		value = Eval(f.Body, en)
+		value = Eval(f.Body, en, d)
 	default:
 		fmt.Println("EVAL ERROR (apply) - Undefined function call ", f)
 	}
